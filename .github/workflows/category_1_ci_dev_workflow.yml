@@ -1,0 +1,35 @@
+name: category_1_ci_dev_workflow
+
+on:
+  workflow_call:
+    inputs:
+      env_name:
+        type: string
+        description: "Execution Environment"
+        required: true
+        default: "dev"
+      flow_type:
+        type: string
+        description: "The flow usecase to execute"
+        required: true
+        default: "flows/category_1"
+  pull_request:
+    branches:
+      - main
+      - development
+    paths:
+      - '.github/worklows/category_1_ci_pipeline.yml'
+      - 'src/llmops/**'
+      - 'src/flows/category_1/**'
+
+#=====================================
+# Execute platform_ci_dev_workflow workflow for experiment, evaluation and deployment of flows
+#=====================================
+jobs:
+  execute-platform-flow-ci:
+    uses: ./.github/workflows/platform_ci_dev_workflow.yml
+    with:
+      env_name: ${{ inputs.env_name || 'dev'}}
+      flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
+    secrets:
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}

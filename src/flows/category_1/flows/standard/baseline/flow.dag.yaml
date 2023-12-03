@@ -1,0 +1,30 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+inputs:
+  math_question:
+    type: string
+    default: If a + b = 2 and a - b = 0, what is a * b?
+outputs:
+  answer:
+    type: string
+    reference: ${trim_answer.output}
+nodes:
+- name: code_gen
+  type: llm
+  source:
+    type: code
+    path: baseline.jinja2
+  inputs:
+    model: gpt-3.5-turbo
+    question: ${inputs.math_question}
+  provider: OpenAI
+  connection: oai
+  api: chat
+- name: trim_answer
+  type: python
+  source:
+    type: code
+    path: trim_answer.py
+  inputs:
+    answer: ${code_gen.output}
+environment:
+  python_requirements_txt: requirements.txt

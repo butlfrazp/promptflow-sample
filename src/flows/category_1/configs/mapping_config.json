@@ -1,0 +1,12 @@
+{
+    "experiment": {
+        "math_question": "${data.question}"
+    },
+    "evaluation": {
+        "default": {
+            "groundtruth": "${data.groundtruth}",
+            "prediction": "${run.outputs.answer}"
+        }
+    }
+
+}
