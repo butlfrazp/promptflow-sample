@@ -13,12 +13,13 @@ on:
         description: "The flow usecase to execute"
         required: true
         default: "flows/category_1"
-  pull_request:
+  push:
     branches:
       - main
       - development
     paths:
       - '.github/worklows/category_1_ci_pipeline.yml'
+      - '.github/workflows/platform_ci_dev_workflow.yml'
       - 'src/llmops/**'
       - 'src/flows/category_1/**'
 
