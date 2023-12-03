@@ -13,6 +13,18 @@ on:
         description: "The flow usecase to execute"
         required: true
         default: "flows/category_1"
+  workflow_dispatch:
+    inputs:
+      env_name:
+        type: string
+        description: "Execution Environment"
+        required: true
+        default: "dev"
+      flow_type:
+        type: string
+        description: "The flow usecase to execute"
+        required: true
+        default: "flows/category_1"
   push:
     branches:
       - main
