@@ -29,6 +29,9 @@ jobs:
   execute-platform-flow-ci:
     uses: ./.github/workflows/platform_ci_dev_workflow.yml
     with:
+      subscription_id: ${{ vars.SUBSCRIPTION_ID }}
+      resource_group_name: ${{ vars.RESOURCE_GROUP_NAME }}
+      workspace_name: ${{ vars.WORKSPACE_NAME }}
       env_name: ${{ inputs.env_name || 'dev'}}
       flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
     secrets:
