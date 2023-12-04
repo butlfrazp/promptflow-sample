@@ -68,7 +68,7 @@ def prepare_and_execute(
 
     runtime = config["RUNTIME_NAME"]
     eval_flow_path = config["EVALUATION_FLOW_PATH"]
-    experiment_name = f"{flow_to_execute}_{stage}"
+    experiment_name = f"{flow_to_execute}_{stage}".replace("/", "_")
 
     eval_flows = eval_flow_path.split(",")
 
@@ -81,7 +81,6 @@ def prepare_and_execute(
 
     standard_flow = f"{flow_to_execute}/{standard_flow_path}"
     dataset_name = []
-    print(data_config_path)
     config_file = open(data_config_path)
     data_config = json.load(config_file)
     for elem in data_config["datasets"]:
@@ -156,7 +155,7 @@ def prepare_and_execute(
                 display_name=f"{experiment_name}_eval_{timestamp}",
                 tags={"build_id": build_id},
             )
-            eval_run._experiment_name = experiment_name.replace("/", "_")
+            eval_run._experiment_name = experiment_name
             eval_job = pf.runs.create_or_update(eval_run, stream=True)
             df_result = None
 
@@ -201,8 +200,8 @@ def prepare_and_execute(
             else:
                 raise Exception("Sorry, exiting job with failure..")
 
-        if not os.path.exists("./reports/flows"):
-            os.makedirs("./reports/flows", exist_ok=True)
+        if not os.path.exists("./reports"):
+            os.makedirs("./reports", exist_ok=True)
 
         combined_results_df = pd.concat(dataframes, ignore_index=True)
         combined_metrics_df = pd.DataFrame(metrics)

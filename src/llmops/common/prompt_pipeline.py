@@ -95,7 +95,7 @@ def prepare_and_execute(
     data_config_path = f"{flow_to_execute}/configs/data_config.json"
 
     runtime = config["RUNTIME_NAME"] or None
-    experiment_name = f"{flow_to_execute}_{stage}"
+    experiment_name = f"{flow_to_execute}_{stage}".replace("/", "_")
 
     ml_client = MLClient(
         DefaultAzureCredential(),
@@ -261,7 +261,7 @@ def prepare_and_execute(
                     "build_id": build_id
                     },
             )
-            run._experiment_name = experiment_name.replace("/", "_")
+            run._experiment_name = experiment_name
             pipeline_job = pf.runs.create_or_update(run, stream=True)
             run_ids.append(pipeline_job.name)
             time.sleep(15)
@@ -282,8 +282,8 @@ def prepare_and_execute(
             else:
                 raise Exception("Sorry, exiting job with failure..")
 
-        if (save_output or save_metric) and not os.path.exists("./reports/flows"):
-            os.makedirs("./reports/flows", exist_ok=True)
+        if (save_output or save_metric) and not os.path.exists("./reports"):
+            os.makedirs("./reports")
 
         if save_output:
             combined_results_df = pd.concat(dataframes, ignore_index=True)
