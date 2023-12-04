@@ -155,4 +155,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: evaluation-reports
-          path: ./reports
+          path: ./src/reports
