@@ -283,7 +283,7 @@ def prepare_and_execute(
                 raise Exception("Sorry, exiting job with failure..")
 
         if (save_output or save_metric) and not os.path.exists("./reports/flows"):
-            os.makedirs("./reports/flows")
+            os.makedirs("./reports/flows", exist_ok=True)
 
         if save_output:
             combined_results_df = pd.concat(dataframes, ignore_index=True)
