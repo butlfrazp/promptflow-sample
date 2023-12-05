@@ -44,7 +44,9 @@ To create a connection locally, you can use the following command:
 ```bash
 # cd into /src
 
-./scripts/create-connection.sh -o <your-openai-api-key>
+./scripts/create-connection.sh \
+  -k <your-azure-openai-api-key>
+  -b <your-azure-openai-api-base>
 ```
 
 This will create a new connection called **oai** based on the [oai_connection.yaml](src/connections/oai_connection.yaml) file.

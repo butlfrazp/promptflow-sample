@@ -15,9 +15,10 @@ nodes:
     path: baseline.jinja2
   inputs:
     model: gpt-3.5-turbo
+    deployment_name: gpt-35-turbo
     question: ${inputs.math_question}
-  provider: OpenAI
-  connection: oai
+  provider: AzureOpenAI
+  connection: aoai
   api: chat
 - name: trim_answer
   type: python

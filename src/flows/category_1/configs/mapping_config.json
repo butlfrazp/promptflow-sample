@@ -8,5 +8,4 @@
             "prediction": "${run.outputs.answer}"
         }
     }
-
 }
