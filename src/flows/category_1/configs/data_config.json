@@ -4,7 +4,7 @@
             "PROMPT_FLOW_CONFIG_NAME": "category_1",
             "ENV_NAME": "pr",
             "DATA_PURPOSE": "pr_data",
-            "DATA_PATH":"data/train_data.jsonl",
+            "DATA_PATH":"data/test_data.jsonl",
             "DATASET_NAME":"category_1_pr",
             "RELATED_EXP_DATASET": "category_1_pr",
             "DATASET_DESC":"this dataset is for pr validation only"
@@ -22,7 +22,7 @@
             "PROMPT_FLOW_CONFIG_NAME": "category_1",
             "ENV_NAME": "dev",
             "DATA_PURPOSE": "training_data",
-            "DATA_PATH":"data/train_data.jsonl",
+            "DATA_PATH":"data/test_data.jsonl",
             "DATASET_NAME":"category_1_train",
             "RELATED_EXP_DATASET": "category_1_train",
             "DATASET_DESC":"this dataset is for prompt experiments"
