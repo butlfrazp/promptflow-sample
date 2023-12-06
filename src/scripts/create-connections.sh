@@ -1,26 +1,25 @@
 #!/bin/bash
 
-openai_api_key=""
+azure_openai_api_key=""
+azure_openai_api_base=""
 
-get_args () {
-    while getopts o: flag; do
-        case "${flag}" in
-            o) openai_api_key=${OPTARG};;
-        esac
-    done
-}
+while getopts "k:b:" flag; do
+    case "${flag}" in
+        k) azure_openai_api_key=${OPTARG};;
+        b) azure_openai_api_base=${OPTARG};;
+    esac
+done
 
 run () {
     # create connection to openai
-    pf connection create -f ./connections/oai_connection.yml \
-        --set api_key="${openai_api_key}"
+    pf connection create -f ./connections/aoai_connection.yaml \
+        --set api_key="${azure_openai_api_key}" \
+        --set api_base="${azure_openai_api_base}"
 }
 
-get_args
-
 # validate the arguments are all set
-if [ -z "$openai_api_key" ]; then
-    echo "Please provide the openai api key"
+if [ -z "$azure_openai_api_key" ] || [ -z "$azure_openai_api_base" ]; then
+    echo "Please provide the following arguments: -k <azure_openai_api_key> -b <azure_openai_api_base>"
     exit 1
 fi
 
