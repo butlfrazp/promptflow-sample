@@ -1,0 +1,22 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+inputs:
+  text:
+    type: string
+    default: What is 2 + 2
+outputs:
+  output_prompt:
+    type: string
+    reference: ${llm_tool.output}
+nodes:
+- name: llm_tool
+  type: python
+  source:
+    type: package
+    tool: llmops_tool.langchain_chain.langchain_chain
+  inputs:
+    connection: aoai
+    deployment_name: gpt-35-turbo
+    system_message: You are a math professor. You are helping a student with their homework.
+    query: ${inputs.text}
