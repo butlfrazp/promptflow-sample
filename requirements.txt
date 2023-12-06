@@ -3,10 +3,11 @@ promptflow
 promptflow-tools
 promptflow-vectordb
 python-dotenv
-langchain==0.0.149
+langchain == 0.0.343
 protobuf!=3.19.5
 jinja2
 azure-ai-ml==1.11.1
 azure-identity==1.14.0
 mlflow==2.7.1
 azureml-mlflow>=1.51
+openai == 1.3.7
