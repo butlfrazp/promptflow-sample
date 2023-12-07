@@ -1,0 +1,56 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+inputs:
+  question:
+    type: string
+    default: Write a program to print 'Hello World'
+  groundtruth:
+    type: string
+    default: print('Hello World')
+  prediction:
+    type: string
+    default: print('Hello World')
+outputs:
+  no_syntax_errors:
+    type: string
+    reference: ${python_syntax_check.output}
+  llm_scores:
+    type: string
+    reference: ${code_gen.output}
+nodes:
+- name: code_gen
+  type: llm
+  source:
+    type: code
+    path: llm_score.jinja2
+  inputs:
+    model: gpt-3.5-turbo
+    deployment_name: gpt-35-turbo
+    question: ${inputs.question}
+    ground_truth: ${inputs.groundtruth}
+    prediction: ${inputs.prediction}
+  provider: AzureOpenAI
+  connection: aoai
+  api: chat
+- name: aggregate_llm_scores
+  type: python
+  source:
+    type: code
+    path: aggregate_llm_scores.py
+  inputs:
+    llm_scores: ${code_gen.output}
+  aggregation: true
+- name: python_syntax_check
+  type: python
+  source:
+    type: code
+    path: python_syntax_check.py
+  inputs:
+    prediction: ${inputs.prediction}
+- name: aggregate_python_syntax_errors
+  type: python
+  source:
+    type: code
+    path: aggregate_python_syntax_errors.py
+  inputs:
+    syntax_checks: ${python_syntax_check.output}
+  aggregation: true

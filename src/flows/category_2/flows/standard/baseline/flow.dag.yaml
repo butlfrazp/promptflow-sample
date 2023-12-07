@@ -1,0 +1,24 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+inputs:
+  python_question:
+    type: string
+    default: Write a program to print 'Hello World'
+outputs:
+  answer:
+    type: string
+    reference: ${code_gen.output}
+nodes:
+- name: code_gen
+  type: llm
+  source:
+    type: code
+    path: baseline.jinja2
+  inputs:
+    model: gpt-3.5-turbo
+    deployment_name: gpt-35-turbo
+    question: ${inputs.python_question}
+  provider: AzureOpenAI
+  connection: aoai
+  api: chat
+environment:
+  python_requirements_txt: requirements.txt
