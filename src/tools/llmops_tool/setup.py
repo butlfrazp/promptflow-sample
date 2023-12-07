@@ -12,7 +12,7 @@ def parse_requirements(file_name: str) -> List[str]:
 
 setup(
     name=PACKAGE_NAME,
-    version="1.0.1",
+    version="1.0.2",
     description="This is my tools package",
     packages=find_packages(),
     entry_points={

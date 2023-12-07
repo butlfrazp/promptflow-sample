@@ -1,5 +1,5 @@
 from langchain.chat_models import AzureChatOpenAI
-from langchain.schema import HumanMessage, SystemMessage
+from langchain.schema import HumanMessage
 from promptflow import tool
 from promptflow.connections import AzureOpenAIConnection
 
@@ -11,8 +11,7 @@ from promptflow.connections import AzureOpenAIConnection
 def langchain_chain(
     connection: AzureOpenAIConnection,
     deployment_name: str,
-    system_message: str,
-    query: str) -> str:
+    chat_prompt: str) -> str:
     llm = AzureChatOpenAI(
         deployment_name=deployment_name,
         openai_api_version=connection.api_version,
@@ -21,8 +20,7 @@ def langchain_chain(
     )
 
     messages = [
-        SystemMessage(content=system_message),
-        HumanMessage(content=query),
+        HumanMessage(content=chat_prompt),
     ]
 
     return llm(messages).content
