@@ -1,5 +1,5 @@
 {
-    "envs":[ 
+    "envs":[
             {
                 "ENV_NAME": "pr",
                 "RUNTIME_NAME": "",
@@ -11,7 +11,7 @@
                 "ENV_NAME": "dev",
                 "RUNTIME_NAME": "",
                 "KEYVAULT_NAME": "",
-                "STANDARD_FLOW_PATH": "flows/standard/baseline",
+                "STANDARD_FLOW_PATH": "flows/standard/langchain_tool",
                 "EVALUATION_FLOW_PATH": "flows/evaluation/default"
             }
     ]
