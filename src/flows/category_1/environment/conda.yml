@@ -1,4 +1,4 @@
-name: math-coding-env
+name: category_1
 channels:
   - conda-forge
 dependencies:
