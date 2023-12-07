@@ -25,6 +25,11 @@ on:
         description: "The flow use-case to execute"
         required: true
         default: "flows/category_1"
+      sub_flows_to_execute:
+        type: string
+        description: "The sub flows to execute"
+        required: true
+        default: "flows/standard/baseline"
     secrets:
       azure_credentials:
         description: "service principal authentication to Azure"
@@ -85,6 +90,7 @@ jobs:
             --workspace_name ${{ inputs.workspace_name }} \
             --build_id ${{ github.run_id }} \
             --flow_to_execute ${{ inputs.flow_type }} \
+            --sub_flows_to_execute ${{ inputs.sub_flows_to_execute }} \
             --env_name ${{ inputs.env_name }} \
             --data_purpose "training_data" \
             --output_file run_id.txt
@@ -142,6 +148,7 @@ jobs:
             --workspace_name ${{ inputs.workspace_name }} \
             --build_id ${{ github.run_id }} \
             --flow_to_execute ${{ inputs.flow_type }} \
+            --sub_flows_to_execute ${{ inputs.sub_flows_to_execute }} \
             --env_name ${{ inputs.env_name }} \
             --data_purpose "test_data" \
             --run_id "$RUN_NAME"

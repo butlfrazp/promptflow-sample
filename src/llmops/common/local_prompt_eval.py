@@ -33,7 +33,8 @@ def prepare_and_execute(
     stage,
     run_id,
     data_purpose,
-    flow_to_execute
+    flow_to_execute,
+    sub_flows_to_execute
 ):
     """
     Run the evaluation loop by executing evaluation flows.
@@ -55,7 +56,6 @@ def prepare_and_execute(
             break
 
     data_mapping_config = f"{flow_to_execute}/configs/mapping_config.json"
-    standard_flow_path = config["STANDARD_FLOW_PATH"]
     data_config_path = f"{flow_to_execute}/configs/data_config.json"
 
     runtime = config["RUNTIME_NAME"]
@@ -66,7 +66,7 @@ def prepare_and_execute(
 
     pf = PFClient()
 
-    standard_flow = f"{flow_to_execute}/{standard_flow_path}"
+    standard_flow = f"{flow_to_execute}/{sub_flows_to_execute}" # TODO: Accept multiple flows
     dataset_name = []
     config_file = open(data_config_path)
     data_config = json.load(config_file)
@@ -254,6 +254,9 @@ def main():
     parser.add_argument(
         "--flow_to_execute", type=str, help="flow use case name", required=True
     )
+    parser.add_argument(
+        "--sub_flows_to_execute", type=str, help="sub flows use case name", required=True
+    )
 
     args = parser.parse_args()
 
@@ -262,6 +265,7 @@ def main():
         args.run_id,
         args.data_purpose,
         args.flow_to_execute,
+        args.sub_flows_to_execute
     )
 
 

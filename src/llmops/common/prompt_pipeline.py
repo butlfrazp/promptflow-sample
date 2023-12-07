@@ -63,6 +63,7 @@ def prepare_and_execute(
     resource_group_name,
     build_id,
     flow_to_execute,
+    sub_flows_to_execute,
     stage,
     output_file,
     data_purpose,
@@ -91,7 +92,6 @@ def prepare_and_execute(
             break
 
     data_mapping_config = f"{flow_to_execute}/configs/mapping_config.json"
-    standard_flow_path = config["STANDARD_FLOW_PATH"]
     data_config_path = f"{flow_to_execute}/configs/data_config.json"
 
     runtime = config["RUNTIME_NAME"] or None
@@ -111,7 +111,7 @@ def prepare_and_execute(
         workspace_name
     )
     logger.info(data_mapping_config)
-    flow = f"{flow_to_execute}/{standard_flow_path}"
+    flow = f"{flow_to_execute}/{sub_flows_to_execute}"
     dataset_name = []
     config_file = open(data_config_path)
     data_config = json.load(config_file)
@@ -401,6 +401,12 @@ def main():
         required=True
     )
     parser.add_argument(
+        "--sub_flows_to_execute",
+        type=str,
+        help="the name of the standard sub flow to execute",
+        required=True
+    )
+    parser.add_argument(
         "--save_output",
         help="Save the outputs in files",
         required=False,
@@ -420,6 +426,7 @@ def main():
         args.resource_group_name,
         args.build_id,
         args.flow_to_execute,
+        args.sub_flows_to_execute,
         args.env_name,
         args.output_file,
         args.data_purpose,
