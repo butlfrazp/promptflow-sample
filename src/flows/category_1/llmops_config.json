@@ -1,18 +1,16 @@
 {
-    "envs":[
-            {
-                "ENV_NAME": "pr",
-                "RUNTIME_NAME": "",
-                "KEYVAULT_NAME": "",
-                "STANDARD_FLOW_PATH": "flows/standard/baseline",
-                "EVALUATION_FLOW_PATH": "flows/evaluation/default"
-            },
-            {
-                "ENV_NAME": "dev",
-                "RUNTIME_NAME": "",
-                "KEYVAULT_NAME": "",
-                "STANDARD_FLOW_PATH": "flows/standard/langchain_tool",
-                "EVALUATION_FLOW_PATH": "flows/evaluation/default"
-            }
+    "envs":[ 
+        {
+            "ENV_NAME": "pr",
+            "RUNTIME_NAME": "",
+            "KEYVAULT_NAME": "",
+            "EVALUATION_FLOW_PATH": "flows/evaluation/default"
+        },
+        {
+            "ENV_NAME": "dev",
+            "RUNTIME_NAME": "",
+            "KEYVAULT_NAME": "",
+            "EVALUATION_FLOW_PATH": "flows/evaluation/default"
+        }
     ]
 }

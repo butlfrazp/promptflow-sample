@@ -34,6 +34,8 @@ Additionally, there is a llmops_config.json file that refers to important infras
 
 - The 'src/llmops' folder contains all the code related to the LLM-Ops execution, evaluation and deployment.
 
+- The 'src/tools' folder contaisns all the code related to custom tools.
+
 ## Getting Started
 
 ### Creating Connections
