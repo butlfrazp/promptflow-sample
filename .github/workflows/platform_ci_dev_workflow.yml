@@ -97,7 +97,7 @@ jobs:
             --env_name ${{ inputs.env_name }} \
             --data_purpose "training_data" \
             --output_file run_id.txt \
-            --runtime ${{ inputs.runtime }}
+            --override_runtime ${{ inputs.runtime }}
           working_directory: src
 
       #=====================================
@@ -156,7 +156,7 @@ jobs:
             --env_name ${{ inputs.env_name }} \
             --data_purpose "test_data" \
             --run_id "$RUN_NAME" \
-            --runtime ${{ inputs.runtime }}
+            --override_runtime ${{ inputs.runtime }}
           working_directory: src
 
       #=====================================
