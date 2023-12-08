@@ -57,7 +57,7 @@ on:
 # Execute platform_ci_dev_workflow workflow for experiment, evaluation and deployment of flows
 #=====================================
 jobs:
-  execute-platform-flow-ci:
+  get_diff:
     steps:
     - name: Checkout Actions
       uses: actions/checkout@v4
@@ -76,18 +76,18 @@ jobs:
         script_parameter: |
           python -m llmops.common.flow_to_run \
             --category=category_1 \
-            --changed_files ${{ get_category_1_file_changes.outputs.all_changed_files }}
+            --changed_files ${{ steps.get_category_1_file_changes.outputs.all_changed_files }}
         working_directory: src
 
-    - name: Execute CI Pipeline
-      uses: ./.github/workflows/platform_ci_dev_workflow.yml
-      with:
-        subscription_id: ${{ vars.SUBSCRIPTION_ID }}
-        resource_group_name: ${{ vars.RESOURCE_GROUP_NAME }}
-        workspace_name: ${{ vars.WORKSPACE_NAME }}
-        env_name: ${{ inputs.env_name || 'dev'}}
-        flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
-        sub_flows_to_execute: ${{ inputs.sub_flows_to_execute || 'flows/standard/baseline' }}
-        runtime: ${{ inputs.runtime || 'promptflow-cpu' }}
-      secrets:
-        azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+  execute-platform-flow-ci:
+    uses: ./.github/workflows/platform_ci_dev_workflow.yml
+    with:
+      subscription_id: ${{ vars.SUBSCRIPTION_ID }}
+      resource_group_name: ${{ vars.RESOURCE_GROUP_NAME }}
+      workspace_name: ${{ vars.WORKSPACE_NAME }}
+      env_name: ${{ inputs.env_name || 'dev'}}
+      flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
+      sub_flows_to_execute: ${{ inputs.sub_flows_to_execute || 'flows/standard/baseline' }}
+      runtime: ${{ inputs.runtime || 'promptflow-cpu' }}
+    secrets:
+      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
