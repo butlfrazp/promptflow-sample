@@ -65,9 +65,6 @@ jobs:
     - name: Get all category 1 file changes
       id: get_category_1_file_changes
       uses: tj-actions/changed-files@v40
-      with:
-        files_yaml: |
-          src/flows/category_1/**
 
     - name: Get Flow Diffs
       id: get_flow_diffs
@@ -77,7 +74,7 @@ jobs:
         script_parameter: |
           python -m llmops.common.flow_to_run \
             --category=category_1 \
-            --changed_files ${{ steps.get_category_1_file_changes.outputs.all_changed_files }}
+            --changed_files=${{ steps.get_category_1_file_changes.outputs.all_changed_files }}
         working_directory: src
 
   execute-platform-flow-ci:
