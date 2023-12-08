@@ -1,0 +1,30 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+inputs:
+  math_question:
+    type: string
+    default: If a + b = 2 and a - b = 0, what is a * b?
+outputs:
+  answer:
+    type: string
+    reference: ${code_gen.output}
+nodes:
+- name: chat_prompt
+  type: prompt
+  source:
+    type: code
+    path: prompt1.jinja2
+  inputs:
+    question: ${inputs.math_question}
+- name: code_gen
+  type: python
+  source:
+    type: code
+    path: additional_tools/chains/langchain_math_tool.py
+  inputs:
+    chat_prompt: ${chat_prompt.output}
+    connection: aoai
+environment:
+  python_requirements_txt: ../../../../../additional_tools/requirements.txt
+
+additional_includes:
+  - ../../../../../additional_tools

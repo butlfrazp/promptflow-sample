@@ -8,18 +8,8 @@ outputs:
     type: string
     reference: ${trim_answer.output}
 nodes:
-- name: code_gen
-  type: llm
-  source:
-    type: code
-    path: baseline.jinja2
-  inputs:
-    model: gpt-3.5-turbo
-    deployment_name: gpt-35-turbo
-    question: ${inputs.math_question}
-  provider: AzureOpenAI
-  connection: aoai
-  api: chat
+- name: llm_call
+  use_variants: true
 - name: trim_answer
   type: python
   source:
@@ -27,5 +17,39 @@ nodes:
     path: trim_answer.py
   inputs:
     answer: ${code_gen.output}
+
 environment:
   python_requirements_txt: requirements.txt
+
+node_variants:
+  llm_call:
+    default_variant_id: variant_0
+    variants:
+      variant_0:
+        node:
+          name: code_gen
+          type: llm
+          source:
+            type: code
+            path: baseline0.jinja2
+          inputs:
+            model: gpt-3.5-turbo
+            deployment_name: gpt-35-turbo
+            question: ${inputs.math_question}
+          provider: AzureOpenAI
+          connection: aoai
+          api: chat
+      variant_1:
+        node:
+          name: code_gen
+          type: llm
+          source:
+            type: code
+            path: baseline1.jinja2
+          inputs:
+            model: gpt-3.5-turbo
+            deployment_name: gpt-35-turbo
+            question: ${inputs.math_question}
+          provider: AzureOpenAI
+          connection: aoai
+          api: chat
