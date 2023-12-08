@@ -8,7 +8,7 @@ outputs:
     type: string
     reference: ${trim_answer.output}
 nodes:
-- name: llm_call
+- name: code_gen
   use_variants: true
 - name: trim_answer
   type: python
@@ -22,7 +22,7 @@ environment:
   python_requirements_txt: requirements.txt
 
 node_variants:
-  llm_call:
+  code_gen:
     default_variant_id: variant_0
     variants:
       variant_0:
