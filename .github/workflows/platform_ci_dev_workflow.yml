@@ -39,7 +39,7 @@ on:
         required: true
 
 jobs:
-  flow-experiment-and_evaluation:
+  flow-experiment-and-evaluation:
     name: prompt flow experiment and evaluation job
     runs-on: ubuntu-latest
     steps:

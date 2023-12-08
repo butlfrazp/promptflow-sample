@@ -58,14 +58,36 @@ on:
 #=====================================
 jobs:
   execute-platform-flow-ci:
-    uses: ./.github/workflows/platform_ci_dev_workflow.yml
-    with:
-      subscription_id: ${{ vars.SUBSCRIPTION_ID }}
-      resource_group_name: ${{ vars.RESOURCE_GROUP_NAME }}
-      workspace_name: ${{ vars.WORKSPACE_NAME }}
-      env_name: ${{ inputs.env_name || 'dev'}}
-      flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
-      sub_flows_to_execute: ${{ inputs.sub_flows_to_execute || 'flows/standard/baseline' }}
-      runtime: ${{ inputs.runtime || 'promptflow-cpu' }}
-    secrets:
-      azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    steps:
+    - name: Checkout Actions
+      uses: actions/checkout@v4
+    - name: Get all category 1 file changes
+      id: get_category_1_file_changes
+      uses: tj-actions/changed-files@v40
+      with:
+        files_yaml: |
+          src/flows/category_1/**
+
+    - name: Get Flow Diffs
+      id: get_flow_diffs
+      uses: ./.github/actions/execute_script
+      with:
+        step_name: "Get Flow Diffs"
+        script_parameter: |
+          python -m llmops.common.flow_to_run \
+            --category=category_1 \
+            --changed_files ${{ get_category_1_file_changes.outputs.all_changed_files }}
+        working_directory: src
+
+    - name: Execute CI Pipeline
+      uses: ./.github/workflows/platform_ci_dev_workflow.yml
+      with:
+        subscription_id: ${{ vars.SUBSCRIPTION_ID }}
+        resource_group_name: ${{ vars.RESOURCE_GROUP_NAME }}
+        workspace_name: ${{ vars.WORKSPACE_NAME }}
+        env_name: ${{ inputs.env_name || 'dev'}}
+        flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
+        sub_flows_to_execute: ${{ inputs.sub_flows_to_execute || 'flows/standard/baseline' }}
+        runtime: ${{ inputs.runtime || 'promptflow-cpu' }}
+      secrets:
+        azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
