@@ -58,6 +58,7 @@ on:
 #=====================================
 jobs:
   get_diff:
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Actions
       uses: actions/checkout@v4
