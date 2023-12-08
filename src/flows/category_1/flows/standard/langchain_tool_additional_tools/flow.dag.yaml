@@ -24,7 +24,7 @@ nodes:
     chat_prompt: ${chat_prompt.output}
     connection: aoai
 environment:
-  python_requirements_txt: ../../../../../additional_tools/requirements.txt
+  python_requirements_txt: requirements.txt
 
 additional_includes:
   - ../../../../../additional_tools
