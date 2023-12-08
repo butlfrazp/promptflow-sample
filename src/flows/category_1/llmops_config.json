@@ -2,12 +2,12 @@
     "envs":[ 
         {
             "ENV_NAME": "pr",
-            "RUNTIME_NAME": "promptflow-cpu",
+            "RUNTIME_NAME": "",
             "EVALUATION_FLOW_PATH": "flows/evaluation/default"
         },
         {
             "ENV_NAME": "dev",
-            "RUNTIME_NAME": "promptflow-cpu",
+            "RUNTIME_NAME": "",
             "EVALUATION_FLOW_PATH": "flows/evaluation/default"
         }
     ]

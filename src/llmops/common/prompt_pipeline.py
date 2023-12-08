@@ -69,6 +69,7 @@ def prepare_and_execute(
     data_purpose,
     save_output,
     save_metric,
+    override_runtime
 ):
     """
     Run the experimentation loop by executing standard flows.
@@ -95,6 +96,9 @@ def prepare_and_execute(
     data_config_path = f"{flow_to_execute}/configs/data_config.json"
 
     runtime = config["RUNTIME_NAME"] or None
+    if override_runtime:
+        runtime = override_runtime
+
     experiment_name = f"{flow_to_execute}_{stage}".replace("/", "_")
 
     ml_client = MLClient(
@@ -418,6 +422,12 @@ def main():
         required=False,
         action="store_true",
     )
+    parser.add_argument(
+        "--override_runtime",
+        type=str,
+        help="runtime to use for execution",
+        required=False,
+    )
     args = parser.parse_args()
 
     prepare_and_execute(
@@ -432,6 +442,7 @@ def main():
         args.data_purpose,
         args.save_output,
         args.save_metric,
+        args.override_runtime
     )
 
 

@@ -30,6 +30,9 @@ on:
         description: "The sub flows to execute"
         required: true
         default: "flows/standard/baseline"
+      runtime:
+        type: string
+        description: "The runtime to use"
     secrets:
       azure_credentials:
         description: "service principal authentication to Azure"
@@ -93,7 +96,8 @@ jobs:
             --sub_flows_to_execute ${{ inputs.sub_flows_to_execute }} \
             --env_name ${{ inputs.env_name }} \
             --data_purpose "training_data" \
-            --output_file run_id.txt
+            --output_file run_id.txt \
+            --runtime ${{ inputs.runtime }}
           working_directory: src
 
       #=====================================
@@ -151,7 +155,8 @@ jobs:
             --sub_flows_to_execute ${{ inputs.sub_flows_to_execute }} \
             --env_name ${{ inputs.env_name }} \
             --data_purpose "test_data" \
-            --run_id "$RUN_NAME"
+            --run_id "$RUN_NAME" \
+            --runtime ${{ inputs.runtime }}
           working_directory: src
 
       #=====================================

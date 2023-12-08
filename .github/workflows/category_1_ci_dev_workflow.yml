@@ -18,6 +18,10 @@ on:
         description: "The sub flows to execute"
         required: true
         default: "flows/standard/baseline"
+      runtime:
+        type: string
+        description: "The runtime to use"
+        default: "promptflow-cpu"
   workflow_dispatch:
     inputs:
       env_name:
@@ -35,6 +39,10 @@ on:
         description: "The sub flows to execute"
         required: true
         default: "flows/standard/baseline"
+      runtime:
+        type: string
+        description: "The runtime to use"
+        default: "promptflow-cpu"
   push:
     branches:
       - main
@@ -58,5 +66,6 @@ jobs:
       env_name: ${{ inputs.env_name || 'dev'}}
       flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
       sub_flows_to_execute: ${{ inputs.sub_flows_to_execute || 'flows/standard/baseline' }}
+      runtime: ${{ inputs.runtime || 'promptflow-cpu' }}
     secrets:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}

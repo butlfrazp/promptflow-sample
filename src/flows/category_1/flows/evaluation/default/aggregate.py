@@ -8,7 +8,7 @@ from promptflow import log_metric, tool
 
 
 @tool
-def aggregate(processed_results: List[str]):
+def aggregate(processed_results: List[int]):
     """
     This tool aggregates the processed result of all lines and calculate the accuracy. Then log metric for the accuracy.
 
@@ -17,7 +17,7 @@ def aggregate(processed_results: List[str]):
 
     # Add your aggregation logic here
     # Aggregate the results of all lines and calculate the accuracy
-    aggregated_result = round((processed_results.count("Correct") / len(processed_results)), 2)
+    aggregated_result = sum([result for result in processed_results if result == 1]) / len(processed_results)
 
     # Log metric the aggregate result
     log_metric(key="accuracy", value=aggregated_result)
