@@ -78,6 +78,7 @@ jobs:
         working_directory: src
 
   execute-platform-flow-ci:
+    needs: get_diff
     uses: ./.github/workflows/platform_ci_dev_workflow.yml
     with:
       subscription_id: ${{ vars.SUBSCRIPTION_ID }}
