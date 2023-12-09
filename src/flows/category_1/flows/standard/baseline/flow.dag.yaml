@@ -7,9 +7,11 @@ outputs:
   answer:
     type: string
     reference: ${trim_answer.output}
+
 nodes:
 - name: code_gen
   use_variants: true
+
 - name: trim_answer
   type: python
   source:
@@ -39,6 +41,7 @@ node_variants:
           provider: AzureOpenAI
           connection: aoai
           api: chat
+
       variant_1:
         node:
           name: code_gen
