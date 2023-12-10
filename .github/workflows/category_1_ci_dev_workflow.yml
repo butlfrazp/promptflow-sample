@@ -66,7 +66,6 @@ on:
 #=====================================
 jobs:
   get_diff:
-    if: ${{ github.event.inputs.run_diff == 'true' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Actions
