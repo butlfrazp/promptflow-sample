@@ -13,6 +13,10 @@ inputs:
     description: "working directory for the script execution"
     required: false
     default: "."
+  if:
+    description: "conditional execution of the step"
+    required: false
+    default: "true"
 
 runs:
   using: composite
@@ -22,3 +26,4 @@ runs:
       run: |
         ${{inputs.script_parameter}}
       working-directory: ${{inputs.working_directory}}
+      if: ${{inputs.if}}
