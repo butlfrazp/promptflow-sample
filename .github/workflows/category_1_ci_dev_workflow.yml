@@ -88,7 +88,7 @@ jobs:
             --default_subflow="${{ inputs.sub_flows_to_execute }}" \
             --output_file_name="flows.txt"
         working_directory: src
-        if: ${{ github.event.inputs.run_diff == 'true' }}
+      if: ${{ github.event.inputs.run_diff == 'true' }}
 
     - name: Read Flows
       id: read-flows

@@ -26,4 +26,3 @@ runs:
       run: |
         ${{inputs.script_parameter}}
       working-directory: ${{inputs.working_directory}}
-      if: ${{inputs.if}}
