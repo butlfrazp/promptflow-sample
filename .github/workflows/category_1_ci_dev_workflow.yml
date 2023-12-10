@@ -22,6 +22,10 @@ on:
         type: string
         description: "The runtime to use"
         default: "promptflow-cpu"
+      run_diff:
+        type: boolean
+        description: "Run diff to determine which flows to execute"
+        default: true
   workflow_dispatch:
     inputs:
       env_name:
@@ -43,6 +47,10 @@ on:
         type: string
         description: "The runtime to use"
         default: "promptflow-cpu"
+      run_diff:
+        type: boolean
+        description: "Run diff to determine which flows to execute"
+        default: true
   push:
     branches:
       - main
@@ -58,10 +66,12 @@ on:
 #=====================================
 jobs:
   get_diff:
+    if: ${{ github.event.inputs.run_diff == 'true' }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Actions
       uses: actions/checkout@v4
+
     - name: Get all category 1 file changes
       id: get_category_1_file_changes
       uses: tj-actions/changed-files@v40
@@ -74,8 +84,20 @@ jobs:
         script_parameter: |
           python -m llmops.common.flow_to_run \
             --category=category_1 \
-            --changed_files=${{ steps.get_category_1_file_changes.outputs.all_changed_files }}
+            --changed_files="${{ steps.get_category_1_file_changes.outputs.all_changed_files }}" \
+            --default_subflow="${{ inputs.sub_flows_to_execute }}" \
+            --output_file_name="flows.txt"
         working_directory: src
+
+    - name: Read Flows
+      id: read-flows
+      shell: bash
+      run: |
+        echo "flows=${cat flows.txt}" >> "$GITHUB_OUTPUT"
+      working-directory: src
+
+    outputs:
+      flows: ${{ steps.read-flows.outputs.flows }}
 
   execute-platform-flow-ci:
     needs: get_diff
@@ -86,7 +108,7 @@ jobs:
       workspace_name: ${{ vars.WORKSPACE_NAME }}
       env_name: ${{ inputs.env_name || 'dev'}}
       flow_type: ${{ inputs.flow_type || 'flows/category_1' }}
-      sub_flows_to_execute: ${{ inputs.sub_flows_to_execute || 'flows/standard/baseline' }}
+      sub_flows_to_execute: ${{ needs.jobs.get_diff.outputs.flows || inputs.sub_flows_to_execute }}
       runtime: ${{ inputs.runtime || 'promptflow-cpu' }}
     secrets:
       azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
