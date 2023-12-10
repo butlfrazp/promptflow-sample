@@ -75,6 +75,7 @@ jobs:
     - name: Get all category 1 file changes
       id: get_category_1_file_changes
       uses: tj-actions/changed-files@v40
+      if: ${{ github.event.inputs.run_diff == 'true' }}
 
     - name: Get Flow Diffs
       id: get_flow_diffs
@@ -88,12 +89,17 @@ jobs:
             --default_subflow="${{ inputs.sub_flows_to_execute }}" \
             --output_file_name="flows.txt"
         working_directory: src
+        if: ${{ github.event.inputs.run_diff == 'true' }}
 
     - name: Read Flows
       id: read-flows
       shell: bash
       run: |
-        echo "flows=$(cat flows.txt)" >> "$GITHUB_OUTPUT"
+        if [ -f "flows.txt" ]; then
+          echo "flows=$(cat flows.txt)" >> "$GITHUB_OUTPUT"
+        else
+          echo "flows=${inputs.sub_flows_to_execute}" >> "$GITHUB_OUTPUT"
+        fi
       working-directory: src
 
     outputs:
