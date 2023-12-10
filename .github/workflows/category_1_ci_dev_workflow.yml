@@ -93,7 +93,7 @@ jobs:
       id: read-flows
       shell: bash
       run: |
-        echo "flows=${cat flows.txt}" >> "$GITHUB_OUTPUT"
+        echo "flows=$(cat flows.txt)" >> "$GITHUB_OUTPUT"
       working-directory: src
 
     outputs:
