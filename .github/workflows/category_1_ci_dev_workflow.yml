@@ -97,7 +97,7 @@ jobs:
         if [ -f "flows.txt" ]; then
           echo "flows=$(cat flows.txt)" >> "$GITHUB_OUTPUT"
         else
-          echo "flows=${inputs.sub_flows_to_execute}" >> "$GITHUB_OUTPUT"
+          echo "flows=$(inputs.sub_flows_to_execute)" >> "$GITHUB_OUTPUT"
         fi
       working-directory: src
 
